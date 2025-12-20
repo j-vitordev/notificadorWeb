@@ -14,8 +14,34 @@ public class PedidoService {
 
     }
 
-    public Pedido criarPedido(String nomeProduto, String codigoRastreio){
+    public Pedido criarPedido(Long produtoId, String nomeCliente, String telefoneCliente){
+        String nomeProduto = resolverNomeProduto(produtoId);
+
+        String codigoRastreio = gerarCodigoRastreio();
+
         Pedido pedido = new Pedido(nomeProduto, codigoRastreio);
-        return pedidoRepository.save(pedido);
+
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+
+        return pedidoSalvo;
+    }
+
+
+    private String resolverNomeProduto(Long produtoId){
+        if (produtoId == 1L){
+            return "Moto G";
+        }
+        if (produtoId == 2L){
+            return "Samsung Galaxi";
+        }
+        if (produtoId == 3L){
+            return "Redmi Note 15";
+        }
+
+        return "Produto desconhecido";
+    }
+
+    private String gerarCodigoRastreio(){
+        return "RAST-" + System.currentTimeMillis();
     }
 }
