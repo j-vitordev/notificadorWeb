@@ -1,4 +1,4 @@
-package domain;
+package app.notificadorweb.domain;
 
 public enum StatusPedido {
     CRIADO,

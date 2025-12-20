@@ -1,4 +1,4 @@
-package domain;
+package app.notificadorweb.domain;
 
 import jakarta.persistence.*;
 
@@ -22,6 +22,25 @@ public class Pedido {
         this.codigoRastreio = codigoRastreio;
         this.status = StatusPedido.CRIADO;
         this.dataUltimaAtualizacao = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    public String getCodigoRastreio() {
+        return codigoRastreio;
+    }
+
+    public StatusPedido getStatus() {
+        return status;
+    }
+    public LocalDateTime getDataUltimaAtualizacao() {
+        return dataUltimaAtualizacao;
     }
 
 
