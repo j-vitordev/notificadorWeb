@@ -2,6 +2,8 @@ package app.notificadorweb.service;
 
 import app.notificadorweb.domain.Pedido;
 import app.notificadorweb.domain.StatusPedido;
+import app.notificadorweb.exception.PedidoNaoEncontradoException;
+import app.notificadorweb.exception.StatusPedidoInvalidoException;
 import org.springframework.stereotype.Service;
 import app.notificadorweb.repository.PedidoRepository;
 
@@ -34,14 +36,14 @@ public class PedidoService {
 
     public Pedido atualizarStatus(Long pedidoId, String novoStatus) {
         Pedido pedido = pedidoRepository.findById(pedidoId).orElseThrow(() ->
-                new RuntimeException("Pedido não encontrado"));
+                new PedidoNaoEncontradoException(pedidoId));
 
         StatusPedido statusConvertido;
 
         try {
             statusConvertido = StatusPedido.valueOf(novoStatus);
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Status inválido" + novoStatus);
+            throw new StatusPedidoInvalidoException(novoStatus);
         }
 
         pedido.atualizarStatus(statusConvertido);
