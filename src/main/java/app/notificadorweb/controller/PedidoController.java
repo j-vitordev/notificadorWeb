@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import app.notificadorweb.service.PedidoService;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/pedidos")
 public class PedidoController {
@@ -19,7 +19,7 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public List<Pedido>listarPedidos(){
         return pedidoService.listarPedidos();
     }
