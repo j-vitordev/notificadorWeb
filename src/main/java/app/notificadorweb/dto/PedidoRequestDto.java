@@ -5,8 +5,10 @@ public class PedidoRequestDto {
     private Long produtoId;
     private String nomeCliente;
     private String telefoneCliente;
+    private String nomeProduto;
 
-    public PedidoRequestDto(){}
+    public PedidoRequestDto() {
+    }
 
     public Long getProdutoId() {
         return produtoId;
@@ -30,5 +32,13 @@ public class PedidoRequestDto {
 
     public void setTelefoneCliente(String telefoneCliente) {
         this.telefoneCliente = telefoneCliente;
+    }
+
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
     }
 }

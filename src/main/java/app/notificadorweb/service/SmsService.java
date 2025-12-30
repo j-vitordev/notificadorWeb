@@ -16,17 +16,18 @@ public class SmsService {
             String nomeCliente,
             String telefoneCliente,
             Long pedidoId,
+            String nomeProduto,
             StatusPedido status
     ) {
 
         String mensagem = """
                 Olá %s!
                 
-                Seu pedido #%d foi atualizado.
+                Seu pedido #%d (%s) foi atualizado.
                 Novo status: %s
                 
                 Obrigado pela preferência!
-                """.formatted(nomeCliente, pedidoId, status);
+                """.formatted(nomeCliente, pedidoId, nomeProduto, status);
 
         Message.creator(
                 new PhoneNumber(telefoneCliente),

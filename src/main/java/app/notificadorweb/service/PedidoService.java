@@ -64,7 +64,7 @@ public class PedidoService {
         smsService.enviarSms(
                 "Vitor",
                 "+5585999580201",
-                pedidoSalvo.getId(),
+                pedidoSalvo.getId(), pedidoSalvo.getNomeProduto(),
                 pedidoSalvo.getStatus()
         );
 
