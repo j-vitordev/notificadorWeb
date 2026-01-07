@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -89,7 +89,31 @@ class PedidoServiceTest {
         verify(pedidoRepository).save(any(Pedido.class));
     }
 
+    @DisplayName("dado um pedido existente, quando atualizar status então deve atualizar e enviar sms")
     @Test
     void atualizarStatus() {
+
+        Pedido pedido = new Pedido("Moto G","XR-6");
+
+        when(pedidoRepository.findById(1L)).thenReturn(Optional.of(pedido));
+
+        when(pedidoRepository.save(any(Pedido.class))).thenReturn(pedido);
+
+        Pedido pedidoAtualizado = pedidoService.atualizarStatus(1l,"EM_PREPARO");
+
+        assertEquals(StatusPedido.EM_PREPARO, pedidoAtualizado.getStatus());
+
+        verify(pedidoRepository).findById(1L);
+
+        verify(pedidoRepository).save(any(Pedido.class));
+
+        verify(smsService).enviarSms(
+                eq("Vitor"),
+                isNull(),
+                isNull(),
+                eq("Moto G"),
+                eq(StatusPedido.EM_PREPARO)
+        );
+
     }
 }
