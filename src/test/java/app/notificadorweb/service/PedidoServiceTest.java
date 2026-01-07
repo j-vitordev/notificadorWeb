@@ -82,7 +82,7 @@ class PedidoServiceTest {
 
 
         assertNotNull(pedidoSalvo);
-        assertEquals("Moto G", pedidoSalvo.getNomeProduto());
+        assertEquals("iPHONE", pedidoSalvo.getNomeProduto());
         assertNotNull(pedidoSalvo.getCodigoRastreio());
         assertEquals(StatusPedido.CRIADO, pedidoSalvo.getStatus());
 
