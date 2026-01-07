@@ -4,6 +4,7 @@ import app.notificadorweb.domain.Pedido;
 import app.notificadorweb.domain.StatusPedido;
 import app.notificadorweb.dto.PedidoRequestDto;
 import app.notificadorweb.dto.PedidoStatusRequestDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import app.notificadorweb.service.PedidoService;
 
@@ -40,6 +41,12 @@ public class PedidoController {
     public Pedido atualizarStatus(@PathVariable Long id,
                                   @RequestBody PedidoStatusRequestDto  pedidoStatusRequestDto) {
         return pedidoService.atualizarStatus(id, pedidoStatusRequestDto.getStatus());
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletarPedido(@PathVariable Long id){
+        pedidoService.deletarPedido(id);
     }
 
 

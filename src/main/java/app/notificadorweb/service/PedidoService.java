@@ -28,7 +28,8 @@ public class PedidoService {
     }
 
     public List<Pedido> listarPedidos(){
-        return pedidoRepository.findAll();
+
+        return pedidoRepository.findByAtivoTrue();
     }
 
     public Pedido buscarPedidoPorId(Long id) {
@@ -72,6 +73,15 @@ public class PedidoService {
         );
 
         return pedidoSalvo;
+    }
+
+    public void deletarPedido(Long pedidoId) {
+        Pedido pedido = pedidoRepository.findById(pedidoId).
+                orElseThrow(() -> new PedidoNaoEncontradoException(pedidoId));
+
+        pedido.excluir();
+
+        pedidoRepository.save(pedido);
     }
 
 
