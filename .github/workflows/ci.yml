@@ -3,13 +3,15 @@ name: CI - Build, Testes e Docker
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - 'v*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar código
+      - name: Checkout do código
         uses: actions/checkout@v4
 
       - name: Configurar Java
@@ -24,11 +26,26 @@ jobs:
       - name: Build da imagem Docker
         run: docker build -t notificador-backend .
 
+      - name: Definir versão
+        if: startsWith(github.ref, 'refs/tags/')
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
       - name: Login no Docker Hub
+        if: startsWith(github.ref, 'refs/tags/')
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Tag da imagem
+      - name: Tag da imagem (versionada)
+        if: startsWith(github.ref, 'refs/tags/')
+        run: docker tag notificador-backend ${{ secrets.DOCKER_USERNAME }}/notificador-backend:${{ env.VERSION }}
+
+      - name: Tag latest
+        if: startsWith(github.ref, 'refs/tags/')
         run: docker tag notificador-backend ${{ secrets.DOCKER_USERNAME }}/notificador-backend:latest
 
-      - name: Push da imagem
+      - name: Push da imagem (versionada)
+        if: startsWith(github.ref, 'refs/tags/')
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/notificador-backend:${{ env.VERSION }}
+
+      - name: Push da imagem latest
+        if: startsWith(github.ref, 'refs/tags/')
         run: docker push ${{ secrets.DOCKER_USERNAME }}/notificador-backend:latest
