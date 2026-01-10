@@ -1,3 +1,4 @@
+![Docker Hub](https://img.shields.io/docker/v/jvitordev96/notificador-backend?label=Docker%20Image&logo=docker)
 # 📦 Notificador Web
 
 Projeto backend desenvolvido em **Java + Spring Boot**, com banco de dados **MySQL**, totalmente **dockerizado**.  
